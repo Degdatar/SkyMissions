@@ -1,0 +1,1005 @@
+/* SkyMissions page layout, records, and app-owned filters. */
+#skymissions { max-width:1120px; margin:0 auto; padding:8px 0 28px; }
+#skymissions .skymissions-heading { position:relative; isolation:isolate; overflow:hidden; border-color:#9f7c4366; background:linear-gradient(100deg,#121820ed,#1b2028d9); }
+#skymissions .skymissions-banner { opacity:.72; filter:saturate(1.05); }
+#skymissions .skymissions-logo { object-fit:contain; border:0; background:transparent; }
+#skymissions .skyachievements-panel { padding:16px; border:1px solid #66768166; border-radius:8px; background:linear-gradient(145deg,#171d24,#10151b); }
+#skymissions .achievement-player-card { display:grid; grid-template-columns:72px minmax(160px,1fr) auto; align-items:center; gap:16px; margin-bottom:4px; padding:18px; border:1px solid #b38a4c88; border-radius:7px; background:radial-gradient(ellipse at 0 0,#bc8b3b29,transparent 40%),linear-gradient(110deg,#252b30,#191e24 60%,#25221d); box-shadow:inset 0 1px #fff2c91a,0 10px 28px #0003; }
+#skymissions .achievement-player-sigil { display:grid; place-items:center; width:64px; height:64px; border:1px solid #d7b46f88; border-radius:6px; background:#161c22; color:#f1c873; font-size:34px; text-shadow:0 0 15px #e2a74688; }
+#skymissions .achievement-player-copy { display:grid; gap:6px; }
+#skymissions .achievement-player-copy small,#skymissions .achievement-vitals small { color:#d6ad67; font:9px "DM Mono",monospace; letter-spacing:.13em; }
+#skymissions .achievement-player-copy h2 { margin:0; color:#eef1f2; font-size:23px; }
+#skymissions .achievement-player-copy span { color:#aab8bd; font:11px "DM Mono",monospace; }
+#skymissions .achievement-vitals { display:grid; grid-template-columns:repeat(3,minmax(78px,1fr)); gap:7px; }
+#skymissions .achievement-vitals>div { display:grid; gap:7px; padding:10px; border:1px solid #85939a44; border-radius:4px; background:#11181eb8; }
+#skymissions .achievement-vitals strong { color:#e6edf0; font:700 17px "DM Mono",monospace; }
+#skymissions .achievement-section-heading { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:2px 1px 12px; }
+#skymissions .achievement-section-heading .eyebrow { margin-bottom:5px; color:#d6ad67; }
+#skymissions .achievement-section-heading h2 { margin:0; font-size:18px; }
+#skymissions .achievement-section-heading>span { color:#9baab0; font:9px/1.5 "DM Mono",monospace; text-align:right; }
+#skymissions .achievement-counter-groups { display:grid; gap:14px; }
+#skymissions .achievement-counter-group { padding:13px; border:1px solid #59687255; border-radius:6px; background:linear-gradient(135deg,#1b242b,#141a20); }
+#skymissions .achievement-counter-group h3 { margin:0 0 10px; color:#e7c17a; font-size:12px; letter-spacing:.07em; text-transform:uppercase; }
+#skymissions .achievement-counter-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:7px; }
+#skymissions .achievement-counter-card { display:grid; gap:6px; min-height:65px; padding:10px; border:1px solid #66768155; border-radius:4px; background:linear-gradient(135deg,#252f36,#1a2026); }
+#skymissions .achievement-counter-card strong { color:#f1d49a; font:700 18px "DM Mono",monospace; }
+#skymissions .achievement-counter-card span { color:#bdc8cc; font-size:10px; line-height:1.35; }
+#skymissions .achievement-record-list { display:grid; gap:8px; }
+#skymissions .achievement-record-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:10px; }
+#skymissions .achievement-record { display:grid; grid-template-rows:auto 132px auto; gap:8px; min-width:0; padding:10px; border:2px solid #87949c; border-radius:6px; background:linear-gradient(145deg,#313a41,#1a2026 48%,#293239); box-shadow:inset 0 1px #ffffff1b; }
+#skymissions .achievement-record strong { overflow:hidden; color:#edf1f2; font-size:11px; text-overflow:ellipsis; white-space:nowrap; }
+#skymissions .achievement-record-art { display:grid; place-items:center; overflow:hidden; border:1px solid #65747b88; border-radius:4px; background:#12191f; }
+#skymissions .achievement-record-art img { width:100%; height:100%; padding:9px; object-fit:contain; }
+#skymissions #achievement-items .achievement-record { grid-template-rows:auto 150px auto; gap:10px; padding:12px; }
+#skymissions #achievement-items .achievement-record-art { padding:7px; }
+#skymissions #achievement-items .achievement-record-art img { padding:13px; }
+#skymissions .achievement-record-art small { padding:5px; color:#889da5; font:8px "DM Mono",monospace; letter-spacing:.06em; text-align:center; }
+#skymissions .achievement-record-meta { display:flex; align-items:center; justify-content:space-between; gap:8px; min-width:0; }
+#skymissions .achievement-record-meta small { overflow:hidden; color:#a2b0b5; font:8px "DM Mono",monospace; text-overflow:ellipsis; white-space:nowrap; }
+#skymissions .achievement-rarity { flex:none; color:#e6c27d; font:8px "DM Mono",monospace; text-transform:uppercase; }
+#skymissions .achievement-record.rarity-uncommon { border-color:#67bd79; background:linear-gradient(145deg,#25402f,#17241c 48%,#263a2d); }
+#skymissions .achievement-record.rarity-rare { border-color:#69a9ee; background:linear-gradient(145deg,#243b56,#151f2d 48%,#26384d); }
+#skymissions .achievement-record.rarity-epic { border-color:#e6a04d; background:linear-gradient(145deg,#523720,#2a2018 48%,#47301d); }
+#skymissions .achievement-record.rarity-legendary { border-color:#e26b68; background:linear-gradient(145deg,#512a2d,#291a1d 48%,#472629); }
+#skymissions .achievement-quest-record { grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto; align-items:center; }
+#skymissions .achievement-quest-record>strong { grid-column:1; grid-row:1; }
+#skymissions .achievement-quest-record .achievement-record-art { display:none; }
+#skymissions .achievement-quest-record .achievement-record-meta { grid-column:1/-1; grid-row:2; }
+#skymissions .achievement-quest-record .achievement-record-meta small { font-size:9px; }
+#skymissions .achievement-empty-state { display:grid; justify-items:center; gap:9px; min-height:260px; align-content:center; text-align:center; }
+#skymissions .achievement-empty-state>span { color:#e6bd72; font-size:38px; }
+#skymissions .achievement-empty-state .eyebrow { margin:0; color:#cda967; }
+#skymissions .achievement-empty-state h2,#skymissions .achievement-empty-state p { margin:0; }
+#skymissions .achievement-empty-state>p:last-child { color:#9eabb0; font-size:12px; }
+
+/* Discovery filters and completed quest journal entries. */
+#skymissions:not(.hidden) {
+  display: grid;
+  grid-template-columns: minmax(175px, 220px) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: start;
+  align-items: start;
+  gap: 14px;
+}
+
+#skymissions > .skymissions-heading {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+#skymissions .skyachievements-tabs {
+  position: sticky;
+  top: 12px;
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+  margin: 0;
+  padding: 8px;
+  overflow: visible;
+  border: 1px solid #53616b77;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #1b242b, #141a20);
+}
+
+#skymissions .skyachievements-tabs button {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 11px;
+  border: 1px solid #8c9ca344;
+  border-radius: 5px;
+  background: linear-gradient(115deg, #323d46, #20282f);
+  color: #cbd5d9;
+  text-align: left;
+  font: 700 10px/1.35 Manrope, sans-serif;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#skymissions .skyachievements-tabs button:hover {
+  border-color: #d1ad6a99;
+  color: #f2dfb8;
+}
+
+#skymissions .skyachievements-tabs button.active {
+  border-color: #dfb467;
+  background: linear-gradient(115deg, #4a3925, #25221e);
+  color: #ffdc9a;
+  box-shadow: inset 0 0 16px #e9b75718;
+}
+
+#skymissions > .skyachievements-panel {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+}
+
+#skymissions .achievement-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+  margin: 12px 0 16px;
+  padding: 12px;
+  border: 1px solid #34434e;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #101820, #151c24);
+}
+
+#skymissions .achievement-filter-picker {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  width: clamp(175px, 23vw, 260px);
+  min-width: 155px;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-label {
+  padding-left: 2px;
+  color: #8495a2;
+  font: 750 9px "DM Mono", monospace;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 11px;
+  border: 1px solid #3b5663;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #1b2731, #131c24);
+  color: #e5edf0;
+  text-align: left;
+  font: 600 11px Manrope, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-trigger:hover,
+#skymissions .achievement-filter-picker .skyachievement-picker-trigger[aria-expanded="true"] {
+  border-color: #62d3dc;
+  background: linear-gradient(180deg, #1d3540, #14252d);
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-trigger span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-trigger i {
+  flex: none;
+  color: #77dce5;
+  font-size: 15px;
+  font-style: normal;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-popover {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 7px);
+  right: 0;
+  width: min(310px, 86vw);
+  padding: 9px;
+  border: 1px solid #48616d;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #19242d, #10171e);
+  box-shadow: 0 16px 38px #000a, inset 0 1px #ffffff0b;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-popover[hidden] { display: none; }
+
+#skymissions .achievement-filter-picker .skyachievement-picker-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  border: 1px solid #354a56;
+  border-radius: 7px;
+  background: #0d151c;
+  color: #7bd8e2;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #e8f0f1;
+  font: 10px Manrope, "Segoe UI", sans-serif;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-options {
+  display: grid;
+  gap: 3px;
+  max-height: 240px;
+  overflow: auto;
+}
+
+#skymissions .achievement-marital-picker .skyachievement-picker-popover {
+  top: auto;
+  bottom: calc(100% + 7px);
+  width: 100%;
+}
+
+#skymissions .achievement-marital-picker .skyachievement-picker-options { max-height:none; overflow:visible; }
+#skymissions .achievement-marital-picker .skyachievement-picker-option { padding-block: 10px; }
+
+#skymissions .achievement-filter-picker .skyachievement-picker-option {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #bdc8ce;
+  text-align: left;
+  font: 10px Manrope, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-option:hover,
+#skymissions .achievement-filter-picker .skyachievement-picker-option.selected {
+  border-color: #58c9d866;
+  background: linear-gradient(100deg, #17353d, #192a32);
+  color: #a3f0f1;
+}
+
+#skymissions .achievement-filter-picker .skyachievement-picker-empty {
+  padding: 12px 9px;
+  color: #8b9ba5;
+  font-size: 10px;
+  text-align: center;
+}
+
+/* Completed quests read like stamped journal entries instead of plain rows. */
+#skymissions [data-achievements-panel="quests"] {
+  position: relative;
+  overflow: visible;
+  border-color: #92734277;
+  background:
+    radial-gradient(ellipse at 96% 3%, #b58b3c18, transparent 35%),
+    linear-gradient(145deg, #1b2027, #11171d 72%);
+}
+
+#skymissions [data-achievements-panel="quests"] .achievement-section-heading {
+  margin-top: 2px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #d0a85a33;
+}
+
+#skymissions [data-achievements-panel="quests"] .achievement-section-heading h2 {
+  font-size: 21px;
+  letter-spacing: -.02em;
+}
+
+#skymissions .achievement-quest-record {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 4px 13px;
+  min-height: 76px;
+  padding: 13px 15px;
+  border: 1px solid #596773;
+  border-left: 3px solid #c39a50;
+  border-radius: 9px;
+  background:
+    linear-gradient(105deg, #242b31 0%, #1a2228 58%, #171c22 100%);
+  box-shadow: inset 0 1px #ffffff0a;
+  transition: border-color .12s ease;
+}
+
+#skymissions .achievement-quest-record:hover {
+  border-color: #c2a267;
+  border-left-color: #f0c874;
+}
+
+#skymissions .achievement-quest-record::before {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #c29c5b99;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #554328, #25221d 72%);
+  color: #f0cf88;
+  content: "✓";
+  font: 700 18px "Segoe UI Symbol", sans-serif;
+  box-shadow: 0 0 18px #d5a74b20;
+}
+
+#skymissions .achievement-quest-record > strong {
+  grid-column: 2;
+  grid-row: 1;
+  color: #f0eee8;
+  font-size: 13px;
+  letter-spacing: .01em;
+}
+
+#skymissions .achievement-quest-record::after {
+  grid-column: 3;
+  grid-row: 1;
+  padding: 5px 8px;
+  border: 1px solid #b7914d66;
+  border-radius: 99px;
+  background: #322a1d;
+  color: #e9c77e;
+  content: "COMPLETED";
+  font: 700 8px "DM Mono", monospace;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+
+#skymissions .achievement-quest-record .achievement-record-meta {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+#skymissions .achievement-quest-record .achievement-record-meta small {
+  color: #9daab1;
+  font: 9px "DM Mono", monospace;
+}
+
+@media (max-width: 620px) {
+  #skymissions:not(.hidden) { grid-template-columns: minmax(125px, 34%) minmax(0, 1fr); gap: 8px; }
+  #skymissions .skyachievements-tabs { top: 8px; gap: 5px; padding: 6px; }
+  #skymissions .skyachievements-tabs button { min-height: 38px; padding: 8px; font-size: 9px; }
+  #skymissions .skyachievements-panel { padding: 11px; }
+  #skymissions .achievement-filter-picker { width: 100%; }
+  #skymissions .achievement-filter-picker .skyachievement-picker-popover { left: 0; right: auto; }
+  #skymissions .achievement-quest-record { grid-template-columns: 40px minmax(0, 1fr); padding: 11px; }
+  #skymissions .achievement-quest-record::before { width: 36px; height: 36px; }
+  #skymissions .achievement-quest-record::after { grid-column: 2; grid-row: 2; justify-self: start; }
+  #skymissions .achievement-quest-record .achievement-record-meta { grid-column: 2; grid-row: 3; }
+}
+
+@media (max-width:700px) {
+  #skymissions .achievement-player-card { grid-template-columns:54px minmax(0,1fr); gap:11px; padding:13px; }
+  #skymissions .achievement-player-sigil { width:50px; height:50px; font-size:27px; }
+  #skymissions .achievement-vitals { grid-column:1/-1; width:100%; }
+  #skymissions .achievement-section-heading { align-items:flex-start; flex-direction:column; }
+  #skymissions .achievement-section-heading>span { text-align:left; }
+  #skymissions .achievement-record-grid { grid-template-columns:repeat(auto-fill,minmax(145px,1fr)); }
+}
+
+/* Character dashboard and the player-owned selections. */
+#skymissions .skyachievements-panel[hidden] { display:none!important; }
+#skymissions [data-achievements-panel="dashboard"] { display:grid; gap:14px; padding:0; border:0; background:transparent; }
+#skymissions .achievement-dashboard-top,
+#skymissions .achievement-dashboard-bottom,
+#skymissions .achievement-management-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; align-items:stretch; }
+#skymissions .achievement-dashboard-card { min-width:0; padding:15px; border:1px solid #596d7d99; border-radius:8px; background:linear-gradient(145deg,#182634,#111923 74%); box-shadow:inset 0 1px #ffffff0a,0 8px 22px #0002; }
+#skymissions .achievement-player-information { display:flex; flex-direction:column; }
+#skymissions .achievement-card-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 12px; padding:0 0 9px; border-bottom:1px solid #72869b3b; }
+#skymissions .achievement-card-heading h2 { margin:0; color:#d9e9f6; font:700 17px Georgia,serif; }
+#skymissions .achievement-card-heading>span { color:#8fbdcb; font:8px "DM Mono",monospace; letter-spacing:.1em; text-align:right; }
+#skymissions .achievement-profile { display:grid; grid-template-columns:minmax(0,56%) minmax(0,1fr); gap:12px; margin-top:11px; flex:1; min-height:0; }
+#skymissions .achievement-profile-art { display:grid; grid-template-rows:50px minmax(0,1fr); align-content:stretch; gap:8px; min-width:0; min-height:340px; }
+#skymissions .achievement-nameplate { position:relative; display:grid; place-items:center; justify-self:stretch; width:100%; height:50px; overflow:hidden; border:0; border-radius:0; background:transparent; }
+#skymissions .achievement-nameplate img { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; }
+#skymissions .achievement-nameplate img[hidden] { display:none; }
+#skymissions .achievement-nameplate span { position:relative; z-index:1; max-width:90%; overflow:hidden; color:#f4d28d; font:700 clamp(12px,1.3vw,18px) Georgia,serif; letter-spacing:.08em; text-overflow:ellipsis; text-shadow:0 2px 5px #08111bdd,0 0 12px #101923; white-space:nowrap; }
+#skymissions .achievement-portrait-frame { position:relative; display:grid; place-items:center; min-width:0; min-height:0; height:100%; overflow:hidden; border:0; border-radius:0; background:transparent; }
+#skymissions .achievement-portrait-frame.wrong-size { border:1px solid #e6a04b; border-radius:4px; box-shadow:0 0 12px #e6a04b33; }
+#skymissions .achievement-portrait-frame img { width:100%; height:100%; object-fit:contain; }
+#skymissions .achievement-portrait-frame img[hidden],#skymissions #achievement-portrait-fallback[hidden] { display:none; }
+#skymissions #achievement-portrait-fallback { color:#71899b; font:9px/1.7 "DM Mono",monospace; text-align:center; letter-spacing:.13em; }
+#skymissions .achievement-profile-stats { display:grid; align-content:space-between; gap:9px; }
+#skymissions .achievement-profile-stats>div { display:grid; gap:4px; padding:9px 10px; border:1px solid #526a7c66; border-radius:5px; background:linear-gradient(135deg,#1d2d3c,#15212c); }
+#skymissions .achievement-profile-stats small { color:#83b9d0; font:8px "DM Mono",monospace; letter-spacing:.13em; }
+#skymissions .achievement-level strong { color:#f3f4ef; font:700 clamp(24px,3vw,39px) "DM Mono",monospace; line-height:1; }
+#skymissions .achievement-title-block strong { color:#f0c777; font:700 14px Georgia,serif; }
+#skymissions .achievement-reputation-block strong { color:#a7e3ef; font:700 21px "DM Mono",monospace; }
+#skymissions .achievement-rank-block strong { color:#f0c777; font:700 14px Georgia,serif; }
+#skymissions .achievement-missions-block strong { color:#a7e3ef; font:700 19px "DM Mono",monospace; }
+#skymissions .achievement-points-block>div { display:flex; align-items:center; gap:8px; }
+#skymissions .achievement-points-block img { width:23px; height:23px; object-fit:contain; filter:drop-shadow(0 0 6px #79d7df55); }
+#skymissions .achievement-points-block strong { color:#f2d28e; font:700 19px "DM Mono",monospace; }
+#skymissions .achievement-action-list { display:grid; gap:0; max-height:450px; margin:0; padding:0; overflow:auto; list-style:none; scrollbar-color:#426070 #111923; }
+#skymissions .achievement-action-list li { display:grid; gap:3px; min-height:38px; padding:8px 6px; border-bottom:1px solid #71879a22; }
+#skymissions .achievement-action-list li:last-child { border:0; }
+#skymissions .achievement-action-list strong { display:-webkit-box; overflow:hidden; color:#d8e3eb; font-size:11px; font-weight:600; line-height:1.4; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+#skymissions .achievement-action-list small { overflow:hidden; color:#7e98a8; font:8px "DM Mono",monospace; text-overflow:ellipsis; white-space:nowrap; }
+#skymissions .achievement-action-list .empty { color:#8999a5; text-align:center; }
+#skymissions .achievement-achievement-carousel { display:grid; grid-template-columns:32px minmax(0,1fr) 32px; align-items:center; gap:8px; }
+#skymissions .achievement-carousel-arrow,#skymissions .achievement-vertical-arrow { display:grid; place-items:center; width:32px; height:38px; border:1px solid #718da377; border-radius:5px; background:#14212c; color:#8ce0ee; font:700 25px/1 Georgia,serif; cursor:pointer; }
+#skymissions .achievement-carousel-arrow:hover,#skymissions .achievement-vertical-arrow:hover { border-color:#83e4ee; background:#203b48; }
+#skymissions .achievement-achievement-track { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:9px; min-width:0; }
+#skymissions .achievement-showcase-card { display:grid; grid-template-rows:minmax(76px,1fr) auto; gap:6px; min-width:0; text-align:center; }
+#skymissions .achievement-showcase-card img { width:100%; height:92px; padding:4px; object-fit:contain; border:1px solid #61778677; border-radius:6px; background:radial-gradient(ellipse,#274452,#121c25 72%); }
+#skymissions .achievement-showcase-card span { display:-webkit-box; overflow:hidden; color:#cedbe4; font:10px/1.35 Georgia,serif; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+#skymissions .achievement-basic-information { align-self:start; }
+#skymissions .achievement-gender-row { display:flex; align-items:center; gap:9px; min-height:35px; padding:0 10px 8px; color:#96d9f0; font:10px "DM Mono",monospace; }
+#skymissions .achievement-gender-icon { color:#54b9f4; font:700 24px/1 "Segoe UI Symbol",sans-serif; text-shadow:0 0 12px #168bdd88; }
+#skymissions .achievement-basic-list { margin:0; border:1px solid #52677a55; border-radius:5px; overflow:hidden; }
+#skymissions .achievement-basic-list>div { display:grid; grid-template-columns:minmax(110px,38%) minmax(0,1fr); gap:8px; min-height:28px; padding:5px 9px; background:#1c2a38; }
+#skymissions .achievement-basic-list>div:nth-child(even) { background:#152230; }
+#skymissions .achievement-basic-list dt { color:#91aabd; font-size:10px; }
+#skymissions .achievement-basic-list dd { overflow:hidden; margin:0; color:#e4ebf0; font-size:10px; font-weight:600; text-overflow:ellipsis; white-space:nowrap; }
+#skymissions .achievement-marital-editor { display:grid; grid-template-columns:minmax(112px,1fr) minmax(100px,1fr) auto; align-items:end; gap:7px; margin-top:9px; }
+#skymissions .achievement-marital-picker { width:100%; min-width:0; }
+#skymissions .achievement-marital-editor input,#skymissions .achievement-property-add input { min-width:0; min-height:38px; padding:7px 8px; border:1px solid #526d7d; border-radius:7px; background:#0e1821; color:#e0ebf0; font:10px "Segoe UI",sans-serif; }
+#skymissions .achievement-marital-editor input:disabled { opacity:.45; }
+#skymissions .achievement-marital-editor button,#skymissions .achievement-property-add button,#skymissions .achievement-choice-row button,#skymissions .achievement-catalog-card button { padding:7px 9px; border:1px solid #5f9aa6; border-radius:4px; background:linear-gradient(120deg,#17343d,#1a2933); color:#a6e5eb; font:700 9px "Segoe UI",sans-serif; cursor:pointer; }
+#skymissions .achievement-marital-editor button:hover,#skymissions .achievement-property-add button:hover,#skymissions .achievement-choice-row button:hover,#skymissions .achievement-catalog-card button:hover { border-color:#a5eaf0; }
+#skymissions .achievement-marital-editor button:disabled,#skymissions .achievement-choice-row button:disabled,#skymissions .achievement-catalog-card button:disabled { opacity:.62; cursor:default; }
+#skymissions .achievement-name-card-carousel { display:grid; grid-template-rows:24px auto 24px; align-items:center; justify-items:center; gap:4px; }
+#skymissions .achievement-vertical-arrow { width:36px; height:24px; font:10px "Segoe UI Symbol",sans-serif; }
+#skymissions .achievement-name-card-list { display:grid; justify-items:center; align-content:start; gap:5px; width:100%; }
+#skymissions .achievement-name-card-row { position:relative; display:grid; justify-items:center; gap:2px; width:100%; padding:2px; overflow:visible; border:0; border-radius:0; background:transparent; color:#e4edf0; cursor:pointer; }
+#skymissions .achievement-name-card-row.selected { border-color:#e5bc70; box-shadow:0 0 12px #d5a1462a; }
+#skymissions .achievement-name-card-row.selected .achievement-name-card-art { filter:drop-shadow(0 0 8px #d5a14688); }
+#skymissions .achievement-name-card-art { position:relative; display:block; overflow:hidden; width:min(288px,100%); aspect-ratio:3/1; background:transparent; }
+#skymissions .achievement-name-card-art img { display:block; width:100%; height:100%; object-fit:contain; }
+#skymissions .achievement-name-card-row>strong { max-width:100%; padding:2px 6px 0; color:#d8e4ea; font:600 10px/1.35 Georgia,serif; overflow-wrap:anywhere; text-align:center; }
+#skymissions .achievement-name-card-gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px; }
+#skymissions .achievement-name-card-option { position:relative; display:grid; justify-items:center; grid-template-rows:auto auto auto; gap:6px; padding:4px; border:0; border-radius:0; background:transparent; color:#e3ebf0; text-align:center; cursor:pointer; }
+#skymissions .achievement-name-card-option.selected { filter:drop-shadow(0 0 7px #d5a14688); }
+#skymissions .achievement-name-card-option .achievement-name-card-art { width:min(288px,100%); aspect-ratio:3/1; border-radius:0; }
+#skymissions .achievement-name-card-option>strong { color:#f2d393; font:700 13px Georgia,serif; }
+#skymissions .achievement-name-card-action { color:#87cad6; font:9px "DM Mono",monospace; }
+#skymissions .achievement-name-card-option.locked { opacity:.78; }
+#skymissions .achievement-name-card-option.locked .achievement-name-card-art img { filter:grayscale(.75) brightness(.6); }
+#skymissions .achievement-name-card-option.locked .achievement-name-card-action { color:#e5bc70; }
+#skymissions .achievement-name-card-action { grid-row:3; }
+#skymissions .achievement-catalog-section { margin-bottom:13px; }
+#skymissions .achievement-catalog-section:last-child { margin-bottom:0; }
+#skymissions .achievement-catalog-section .achievement-record-grid { grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); }
+#skymissions .achievement-catalog-card { display:grid; grid-template-rows:140px auto auto; gap:9px; padding:10px; border:1px solid #60758a88; border-radius:6px; background:linear-gradient(145deg,#1d2a39,#131c26); }
+#skymissions .achievement-catalog-card img { width:100%; height:140px; padding:6px; object-fit:contain; border-radius:4px; background:radial-gradient(ellipse,#273c4b,#101923 72%); }
+#skymissions .achievement-catalog-card strong { color:#e4edf2; font:700 11px/1.35 Georgia,serif; }
+#skymissions .achievement-catalog-card button { justify-self:start; }
+#skymissions .achievement-management-columns { align-items:start; }
+#skymissions .achievement-choice-list { display:grid; gap:7px; }
+#skymissions .achievement-choice-row { display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:0; padding:10px; border:1px solid #52697a66; border-radius:5px; background:#121e29; }
+#skymissions .achievement-choice-row>div:first-child { display:grid; gap:4px; min-width:0; }
+#skymissions .achievement-choice-row strong { overflow:hidden; color:#e4edf0; font-size:11px; text-overflow:ellipsis; }
+#skymissions .achievement-choice-row small { color:#849dac; font:8px "DM Mono",monospace; }
+#skymissions .achievement-choice-controls { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; }
+#skymissions .achievement-choice-row button.subtle { border-color:#57636d; background:#19222a; color:#a5b2b9; }
+#skymissions .achievement-property-manager>p { margin:0 0 13px; color:#9eb0bd; font-size:11px; }
+#skymissions .achievement-property-add { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:8px; margin-bottom:14px; }
+#skymissions .achievement-property-add label { color:#95a9b5; font-size:10px; }
+#skymissions .achievement-property-add input { width:100%; }
+#skymissions .achievement-property-manager { width:100%; min-width:0; }
+#skymissions .achievement-property-manager>.achievement-choice-list { width:100%; max-width:none; }
+#skymissions #achievement-properties .achievement-choice-row { width:100%; box-sizing:border-box; }
+#skymissions [data-achievements-panel="achievements"]>.achievement-section-heading { margin-bottom:14px; }
+#skymissions [data-achievements-panel="achievements"] .achievement-record-grid .empty { grid-column:1/-1; }
+#skymissions .achievement-mission-toolbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 18px; }
+#skymissions [data-achievements-panel="missions"] .achievement-mission-summary { display:flex; align-items:center; gap:10px; margin:0; }
+#skymissions [data-achievements-panel="missions"] .achievement-mission-summary strong { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:7px 13px; border:1px solid #806d4d99; border-radius:7px; background:linear-gradient(145deg,#2b2924,#161c23); color:#f0d091; font:700 11px "DM Mono",monospace; }
+#skymissions .achievement-mission-completed-stat { color:#e6ca8d!important; }
+#skymissions .achievement-mission-check { display:grid; place-items:center; width:27px; height:27px; border:1px solid #6fc59b; border-radius:50%; background:radial-gradient(circle,#3c856955,#173d35); color:#82e5a9; font:700 18px "Segoe UI",sans-serif; }
+#skymissions .achievement-mission-points-stat { border-color:#8e794c!important; background:linear-gradient(120deg,#302a20,#1a2430)!important; }
+#skymissions .achievement-mission-points-stat img { width:31px; height:31px; object-fit:contain; filter:drop-shadow(0 0 5px #49bbff55); }
+#skymissions .achievement-mission-controls { display:flex; align-items:center; justify-content:flex-end; gap:15px; }
+#skymissions .achievement-mission-refresh-countdown { display:grid; gap:4px; text-align:right; }
+#skymissions .achievement-mission-refresh-countdown span { color:#c5a96d; font:700 8px "DM Mono",monospace; letter-spacing:.16em; }
+#skymissions .achievement-mission-refresh-countdown strong { color:#f2d28c; font:700 18px Georgia,serif; white-space:nowrap; }
+#skymissions .achievement-mission-refresh-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:8px 14px; border:1px solid #c39a55; border-radius:6px; background:linear-gradient(145deg,#40321f,#1f2429); color:#f0d091; font:700 11px Georgia,serif; text-transform:uppercase; cursor:pointer; }
+#skymissions .achievement-mission-refresh-button>span { color:#f2d28c; font:700 20px "Segoe UI Symbol",sans-serif; }
+#skymissions .achievement-mission-refresh-button small { padding-left:7px; border-left:1px solid #9a7b4e88; color:#9fcdcd; font:8px "DM Mono",monospace; text-transform:none; }
+#skymissions .achievement-mission-refresh-button:hover { border-color:#f0cf86; background:linear-gradient(145deg,#51402a,#242b31); }
+#skymissions .achievement-missions-heading { margin-bottom:13px; }
+#skymissions .achievement-mission-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+#skymissions .achievement-mission-card { position:relative; display:grid; grid-template-rows:auto minmax(38px,auto) auto 13px minmax(45px,auto) auto; align-content:space-between; gap:12px; min-width:0; min-height:365px; padding:22px 18px 16px; overflow:hidden; border:2px solid #b6985f; border-radius:11px; background:radial-gradient(ellipse at 50% 28%,#d4b97318,transparent 54%),linear-gradient(155deg,#29343a,#101a21 72%); box-shadow:inset 0 0 0 3px #0c131b99,inset 0 1px #fff2; }
+#skymissions .achievement-mission-card::before { content:""; position:absolute; inset:6px; border:1px solid #d9b87855; border-radius:7px; pointer-events:none; }
+#skymissions .achievement-mission-card[data-mission-style="gold"] { border-color:#bc9a58; background:radial-gradient(ellipse at 50% 35%,#c49a4a30,transparent 60%),linear-gradient(155deg,#273438,#111c22 73%); }
+#skymissions .achievement-mission-card[data-mission-style="ember"] { border-color:#a76a56; background:radial-gradient(ellipse at 50% 35%,#d95a3430,transparent 60%),linear-gradient(155deg,#332b2b,#171b20 73%); }
+#skymissions .achievement-mission-card[data-mission-style="frost"] { border-color:#899bb1; background:radial-gradient(ellipse at 50% 35%,#8ebce333,transparent 60%),linear-gradient(155deg,#29333f,#121a23 73%); }
+#skymissions .achievement-mission-card.accepted { border-color:#54c7bd; box-shadow:inset 0 0 0 3px #0c131b99,0 0 18px #3ccbb522; }
+#skymissions .achievement-mission-card h3 { position:relative; margin:0; color:#f2d28c; font:700 23px/1.2 Georgia,serif; text-align:center; text-shadow:0 2px 8px #000b; }
+#skymissions .achievement-mission-card[data-mission-style="ember"] h3 { color:#efb28f; }
+#skymissions .achievement-mission-card[data-mission-style="frost"] h3 { color:#d8e3f2; }
+#skymissions .achievement-mission-card p { position:relative; min-height:38px; margin:0; color:#e0e5e5; font-size:12px; line-height:1.55; text-align:center; }
+#skymissions .achievement-mission-count { color:#f2d28c; font:700 18px Georgia,serif; text-align:center; }
+#skymissions .achievement-mission-progress { position:relative; height:13px; padding:2px; overflow:hidden; border:1px solid #8d7b5d; border-radius:8px; background:linear-gradient(180deg,#090d12,#1d252c); box-shadow:inset 0 2px 4px #000c; }
+#skymissions .achievement-mission-progress span { display:block; height:100%; border-radius:5px; background:linear-gradient(90deg,#f4d47d,#b87728); box-shadow:0 0 9px #ffb43988; transition:width .2s ease; }
+#skymissions .achievement-mission-card[data-mission-style="ember"] .achievement-mission-progress span { background:linear-gradient(90deg,#ff7640,#d33a24); box-shadow:0 0 9px #ff5a3088; }
+#skymissions .achievement-mission-card[data-mission-style="frost"] .achievement-mission-progress span { background:linear-gradient(90deg,#d5e8ff,#6f9dcb); box-shadow:0 0 9px #9bcaff88; }
+#skymissions .achievement-mission-reward { display:flex; align-items:center; justify-content:center; gap:8px; min-height:46px; color:#f2d99d; }
+#skymissions .achievement-mission-reward img { width:39px; height:39px; object-fit:contain; filter:drop-shadow(0 0 7px #59b8ff44); }
+#skymissions .achievement-mission-reward strong { font:700 16px Georgia,serif; }
+#skymissions .achievement-mission-actions { position:relative; display:flex; align-items:center; justify-content:center; gap:8px; }
+#skymissions .achievement-mission-card button { min-height:39px; padding:8px 13px; border:1px solid #c49e5c; border-radius:5px; background:linear-gradient(145deg,#3d3323,#1b2025); color:#efd394; font:700 10px "Segoe UI",sans-serif; cursor:pointer; }
+#skymissions .achievement-mission-card button:hover:not(:disabled) { border-color:#efd394; }
+#skymissions .achievement-mission-card button.achievement-mission-accept:disabled { border-color:#4eaaa5; background:linear-gradient(145deg,#173b3d,#14252c); color:#99e7df; opacity:1; cursor:default; }
+#skymissions .achievement-mission-card button.achievement-mission-quit { border-color:#965950; background:linear-gradient(145deg,#492c2a,#241d22); color:#efb1a6; }
+#skymissions .achievement-mission-card button:disabled { cursor:default; }
+#achievement-mission-toast { position:fixed; z-index:200; left:50%; bottom:34px; width:min(460px,calc(100vw - 36px)); padding:15px 20px; transform:translateX(-50%); border:1px solid #e1ba69; border-radius:9px; background:linear-gradient(140deg,#26394a,#121b24); box-shadow:0 0 0 1px #1b2732,0 12px 40px #000b,0 0 24px #dcb05233; color:#eaf0f2; text-align:center; }
+#achievement-mission-toast[hidden] { display:none; }
+#achievement-mission-toast strong { display:block; margin-bottom:5px; color:#f2d18a; font:700 18px Georgia,serif; }
+#achievement-mission-toast span { color:#a8dbe2; font:11px "DM Mono",monospace; }
+@media(max-width:900px) {
+  #skymissions .achievement-profile { grid-template-columns:minmax(0,48%) minmax(0,1fr); }
+  #skymissions .achievement-achievement-track { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  #skymissions .achievement-showcase-card:nth-child(n+4) { display:none; }
+}
+@media(max-width:900px) { #skymissions .achievement-mission-toolbar { align-items:flex-start; flex-direction:column; } #skymissions .achievement-mission-controls { width:100%; justify-content:space-between; } }
+@media(max-width:900px) { #skymissions .achievement-mission-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:520px) { #skymissions .achievement-mission-grid { grid-template-columns:minmax(0,1fr); } #skymissions .achievement-mission-card { min-height:300px; } }
+@media(max-width:520px) { #skymissions [data-achievements-panel="missions"] .achievement-mission-summary { width:100%; flex-wrap:wrap; } #skymissions .achievement-mission-controls { align-items:flex-start; flex-direction:column; } #skymissions .achievement-mission-refresh-countdown { text-align:left; } }
+@media(max-width:700px) {
+  #skymissions .achievement-dashboard-top,#skymissions .achievement-dashboard-bottom,#skymissions .achievement-management-columns { grid-template-columns:minmax(0,1fr); }
+  #skymissions .achievement-dashboard-card { padding:11px; }
+  #skymissions .achievement-achievement-track { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #skymissions .achievement-showcase-card:nth-child(n+3) { display:none; }
+  #skymissions .achievement-marital-editor { grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; }
+  #skymissions .achievement-property-add { grid-template-columns:minmax(0,1fr) auto; }
+  #skymissions .achievement-property-add label { grid-column:1/-1; }
+}
+
+
+/* SkyMissions uses a horizontal app navigation, with dashboard subsections nested below it. */
+#skymissions:not(.hidden) { display:block; max-width:1120px; margin:0 auto; padding:8px 0 28px; }
+#skymissions > .skymissions-heading { margin-bottom:14px; }
+#skymissions > .skymissions-tabs { position:static; display:flex; flex-wrap:wrap; grid-column:auto; grid-row:auto; gap:8px; margin:0 0 12px; padding:7px; border:1px solid #66768166; border-radius:8px; background:linear-gradient(135deg,#171e25,#10161c); }
+#skymissions > .skymissions-tabs button { min-height:40px; padding:10px 17px; border:1px solid #60727d55; border-radius:5px; background:linear-gradient(135deg,#2b363e,#1c252c); color:#c4cdd0; font:700 10px "DM Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
+#skymissions > .skymissions-tabs button.active { border-color:#d9ad58; background:linear-gradient(135deg,#564124,#28231c); color:#f1d49a; }
+#skymissions > [data-achievements-panel] { min-width:0; margin-bottom:12px; }
+#skymissions > [data-achievements-panel][hidden] { display:none; }
+#skymissions .skymissions-dashboard-tabs { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 12px; padding:6px; border:1px solid #586a7555; border-radius:7px; background:#10171e; }
+#skymissions .skymissions-dashboard-tabs button { padding:8px 12px; border:1px solid transparent; border-radius:4px; background:transparent; color:#9caeb5; font:600 10px "DM Mono",monospace; }
+#skymissions .skymissions-dashboard-tabs button.active { border-color:#4c9dac; background:#17333b; color:#9be3ec; }
+#skymissions .skymissions-dashboard-subpanel { min-height:260px; }
+#skymissions .achievement-store-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; }
+#skymissions .achievement-store-card { display:grid; align-content:start; gap:9px; min-width:0; padding:12px; border:1px solid #60768277; border-radius:7px; background:linear-gradient(145deg,#1b2933,#111922); }
+#skymissions .achievement-store-card img { width:100%; height:118px; object-fit:contain; border-radius:4px; background:#0e161d; }
+#skymissions .achievement-store-card h3 { margin:0; color:#f0cc81; font:700 14px Georgia,serif; }
+#skymissions .achievement-store-card p { margin:0; color:#aab9bf; font-size:11px; line-height:1.45; }
+#skymissions .achievement-store-card button { justify-self:start; padding:8px 11px; border:1px solid #59b9c9; border-radius:4px; background:#16313a; color:#a7eaf0; font:700 10px "DM Mono",monospace; }
+#skymissions .achievement-store-card button:disabled { opacity:.55; cursor:default; }
+@media (max-width:620px) {
+  #skymissions:not(.hidden) { display:block; padding:5px 0 18px; }
+  #skymissions > .skymissions-tabs { position:static; display:flex; flex-wrap:wrap; }
+}
+
+/* Large carved-metal navigation plaques, matching the SkyMissions reference. */
+#skymissions > .skymissions-tabs {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(8px,1.2vw,16px);
+  margin:20px 0 16px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab {
+  --plaque-frame:linear-gradient(145deg,#e2bd73 0%,#846239 18%,#473624 49%,#bd914c 77%,#e6c77f 100%);
+  --plaque-face:radial-gradient(ellipse at 50% -30%,#ba873a33,transparent 70%),linear-gradient(145deg,#31271b,#1b1d20 58%,#392b1b);
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(9px,1.5vw,20px);
+  width:100%;
+  min-width:0;
+  min-height:clamp(78px,8.6vw,118px);
+  padding:16px clamp(12px,2vw,28px);
+  overflow:hidden;
+  border:0;
+  color:#f0d49b;
+  background:var(--plaque-frame);
+  clip-path:polygon(5% 0,13% 4%,38% 4%,45% 1%,55% 1%,62% 4%,87% 4%,95% 0,100% 17%,98% 31%,100% 50%,98% 69%,100% 83%,95% 100%,87% 96%,62% 96%,55% 99%,45% 99%,38% 96%,13% 96%,5% 100%,0 83%,2% 69%,0 50%,2% 31%,0 17%);
+  filter:drop-shadow(0 5px 9px #0007);
+  cursor:pointer;
+  transition:filter .18s ease,transform .18s ease,color .18s ease;
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab::before {
+  position:absolute;
+  z-index:0;
+  inset:4px;
+  content:"";
+  background:var(--plaque-face);
+  box-shadow:inset 0 1px #fff3,inset 0 -1px #0008;
+  clip-path:polygon(5% 0,13% 4%,38% 4%,45% 1%,55% 1%,62% 4%,87% 4%,95% 0,100% 17%,98% 31%,100% 50%,98% 69%,100% 83%,95% 100%,87% 96%,62% 96%,55% 99%,45% 99%,38% 96%,13% 96%,5% 100%,0 83%,2% 69%,0 50%,2% 31%,0 17%);
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab::after {
+  position:absolute;
+  z-index:0;
+  inset:9px 11px;
+  content:"";
+  border:1px solid #edcf9560;
+  clip-path:polygon(5% 0,13% 5%,38% 5%,45% 0,55% 0,62% 5%,87% 5%,95% 0,100% 17%,98% 31%,100% 50%,98% 69%,100% 83%,95% 100%,87% 95%,62% 95%,55% 100%,45% 100%,38% 95%,13% 95%,5% 100%,0 83%,2% 69%,0 50%,2% 31%,0 17%);
+  opacity:.75;
+  pointer-events:none;
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab > svg,
+#skymissions > .skymissions-tabs > .skymissions-main-tab > span {
+  position:relative;
+  z-index:1;
+  flex:none;
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab > svg {
+  width:clamp(23px,2.5vw,36px);
+  height:clamp(23px,2.5vw,36px);
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 5px currentColor);
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab > span {
+  color:inherit;
+  font:700 clamp(12px,1.45vw,21px)/1.1 Georgia,"Times New Roman",serif;
+  letter-spacing:.075em;
+  text-align:center;
+  text-transform:uppercase;
+  text-shadow:0 2px 3px #000b;
+  white-space:nowrap;
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab:not(.active) {
+  --plaque-frame:linear-gradient(145deg,#b9c6d2 0%,#69798c 18%,#374558 49%,#8090a1 77%,#c0cbd4 100%);
+  --plaque-face:radial-gradient(ellipse at 50% -30%,#b8d2ed25,transparent 70%),linear-gradient(145deg,#273545,#171f2a 58%,#28384b);
+  color:#c4d0dc;
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab:not(.active)::after { border-color:#d5e0eb55; }
+#skymissions > .skymissions-tabs > .skymissions-main-tab:hover {
+  filter:brightness(1.12) drop-shadow(0 7px 12px #0009);
+  transform:translateY(-2px);
+}
+#skymissions > .skymissions-tabs > .skymissions-main-tab:focus-visible {
+  outline:2px solid #7fe1ef;
+  outline-offset:3px;
+}
+@media(max-width:620px) {
+  #skymissions > .skymissions-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); flex-wrap:unset; gap:6px; margin:12px 0; }
+  #skymissions > .skymissions-tabs > .skymissions-main-tab { flex-direction:column; gap:5px; min-height:76px; padding:11px 5px; }
+  #skymissions > .skymissions-tabs > .skymissions-main-tab > span { font-size:clamp(8px,2.2vw,11px); letter-spacing:.035em; }
+  #skymissions > .skymissions-tabs > .skymissions-main-tab > svg { width:23px; height:23px; }
+}
+
+/* Compact framed subtabs and a lightweight searchable SkyStore. */
+#skymissions .skymissions-dashboard-tabs {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(5px,.8vw,10px);
+  margin:20px 0 16px;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+#skymissions .skymissions-dashboard-tabs button {
+  --subtab-frame:linear-gradient(145deg,#c4d0da 0%,#667789 18%,#344252 50%,#8795a2 82%,#c9d3db 100%);
+  --subtab-face:linear-gradient(145deg,#293747,#18212b 58%,#2a394a);
+  position:relative;
+  isolation:isolate;
+  display:grid;
+  place-items:center;
+  min-width:0;
+  min-height:55px;
+  padding:9px clamp(5px,1vw,14px);
+  overflow:hidden;
+  border:0;
+  border-radius:0;
+  clip-path:polygon(5% 0,14% 5%,38% 5%,45% 0,55% 0,62% 5%,86% 5%,95% 0,100% 18%,98% 32%,100% 50%,98% 68%,100% 82%,95% 100%,86% 95%,62% 95%,55% 100%,45% 100%,38% 95%,14% 95%,5% 100%,0 82%,2% 68%,0 50%,2% 32%,0 18%);
+  background:var(--subtab-frame);
+  color:#c4d0dc;
+  cursor:pointer;
+  transition:color .12s linear;
+}
+#skymissions .skymissions-dashboard-tabs button::before,
+#skymissions .skymissions-dashboard-tabs button::after { position:absolute; z-index:0; content:""; pointer-events:none; }
+#skymissions .skymissions-dashboard-tabs button::before {
+  inset:3px;
+  clip-path:polygon(5% 0,14% 5%,38% 5%,45% 0,55% 0,62% 5%,86% 5%,95% 0,100% 18%,98% 32%,100% 50%,98% 68%,100% 82%,95% 100%,86% 95%,62% 95%,55% 100%,45% 100%,38% 95%,14% 95%,5% 100%,0 82%,2% 68%,0 50%,2% 32%,0 18%);
+  background:var(--subtab-face);
+}
+#skymissions .skymissions-dashboard-tabs button::after {
+  inset:7px 9px;
+  border:1px solid #d6e0e866;
+  clip-path:polygon(5% 0,14% 5%,38% 5%,45% 0,55% 0,62% 5%,86% 5%,95% 0,100% 18%,98% 32%,100% 50%,98% 68%,100% 82%,95% 100%,86% 95%,62% 95%,55% 100%,45% 100%,38% 95%,14% 95%,5% 100%,0 82%,2% 68%,0 50%,2% 32%,0 18%);
+}
+#skymissions .skymissions-dashboard-tabs button > span {
+  position:relative;
+  z-index:1;
+  overflow:hidden;
+  color:inherit;
+  font:700 clamp(9px,.95vw,14px)/1.1 Georgia,"Times New Roman",serif;
+  letter-spacing:.045em;
+  text-align:center;
+  text-overflow:ellipsis;
+  text-shadow:0 1px 2px #000b;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+#skymissions .skymissions-dashboard-tabs button.active {
+  --subtab-frame:linear-gradient(145deg,#f0d08b 0%,#9b7035 18%,#654820 50%,#bd914d 82%,#f2d28c 100%);
+  --subtab-face:linear-gradient(145deg,#493722,#241d16 58%,#49351c);
+  color:#f2d49a;
+}
+#skymissions .skymissions-dashboard-tabs button.active::after { border-color:#f5dda380; }
+#skymissions .skymissions-dashboard-tabs button:hover { color:#fff0c9; }
+#skymissions .skymissions-dashboard-tabs button:focus-visible,
+#skymissions > .skymissions-tabs > .skymissions-main-tab:focus-visible { outline:2px solid #7fe1ef; outline-offset:3px; }
+#skymissions > .skymissions-tabs > .skymissions-main-tab { transition:color .12s linear; }
+#skymissions > .skymissions-tabs > .skymissions-main-tab:hover { filter:drop-shadow(0 5px 9px #0007); transform:none; }
+
+#skymissions .skymissions-title-toolbar,
+#skymissions .skymissions-store-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 14px; }
+#skymissions .skymissions-search-field {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex:1 1 420px;
+  min-width:0;
+  min-height:42px;
+  padding:0 12px;
+  border:1px solid #607986;
+  border-radius:5px;
+  background:#101a23;
+  color:#77d6e3;
+}
+#skymissions .skymissions-search-field > span { font:20px/1 "Segoe UI Symbol",sans-serif; }
+#skymissions .skymissions-search-field input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:#e6edef; font:12px "Segoe UI",sans-serif; }
+#skymissions .skymissions-search-field input::placeholder { color:#8397a1; }
+#skymissions .skymissions-result-count { flex:none; color:#8ca6b3; font:10px "DM Mono",monospace; letter-spacing:.04em; }
+#skymissions .skymissions-title-current { margin:0 0 12px; color:#9cabb5; font-size:12px; }
+#skymissions .skymissions-title-current strong { color:#f1cd83; }
+#skymissions .skymissions-title-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:9px; }
+#skymissions .skymissions-title-option {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+  min-height:54px;
+  padding:10px 12px;
+  border:1px solid #5b7180;
+  border-radius:5px;
+  background:linear-gradient(145deg,#1b2934,#111923);
+  color:#dce5e8;
+  text-align:left;
+  cursor:pointer;
+}
+#skymissions .skymissions-title-option > strong { min-width:0; color:#e4c784; font:700 12px Georgia,serif; }
+#skymissions .skymissions-title-option > span { flex:none; color:#89bdc5; font:9px "DM Mono",monospace; }
+#skymissions .skymissions-title-option.selected { border-color:#d9ad58; background:linear-gradient(145deg,#3c3021,#1d2023); }
+#skymissions .skymissions-title-option:hover { border-color:#92d9e2; }
+#skymissions .achievement-store-grid { grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+#skymissions .achievement-store-card {
+  display:grid;
+  grid-template-columns:minmax(70px,104px) minmax(0,1fr);
+  align-items:start;
+  gap:12px;
+  min-width:0;
+  padding:12px;
+  border:1px solid #526b7b;
+  border-radius:7px;
+  background:linear-gradient(145deg,#1c2a35,#121a23);
+}
+#skymissions .achievement-store-card:hover { border-color:#8da9b5; }
+#skymissions .achievement-store-card[hidden],
+#skymissions .achievement-store-card img[hidden] { display:none; }
+#skymissions .achievement-store-card.without-image { grid-template-columns:minmax(0,1fr); }
+#skymissions .achievement-store-card > img { width:100%; height:112px; object-fit:contain; border:1px solid #435b68; border-radius:4px; background:#0d151c; }
+#skymissions .achievement-store-copy { display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-width:0; }
+#skymissions .achievement-store-type { color:#86cad2; font:9px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+#skymissions .achievement-store-card h3 { overflow-wrap:anywhere; }
+#skymissions .achievement-store-price { color:#f0cf86; font:10px "DM Mono",monospace; }
+#skymissions .achievement-store-card button { margin-top:auto; }
+#skymissions .skymissions-store-no-results { padding:16px; text-align:center; }
+@media(max-width:760px) {
+  #skymissions .skymissions-dashboard-tabs { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  #skymissions .skymissions-title-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); }
+}
+@media(max-width:520px) {
+  #skymissions .skymissions-title-toolbar,#skymissions .skymissions-store-toolbar { align-items:stretch; flex-direction:column; }
+  #skymissions .skymissions-search-field { flex-basis:auto; }
+  #skymissions .skymissions-result-count { align-self:flex-end; }
+  #skymissions .achievement-store-grid { grid-template-columns:minmax(0,1fr); }
+}
+
+/* SkyStore reward vault */
+#skymissions [data-achievements-panel="store"] { padding:15px; }
+#skymissions .skymissions-store-header {
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  min-height:138px;
+  margin-bottom:14px;
+  padding:22px clamp(18px,3vw,34px);
+  overflow:hidden;
+  border:1px solid #a4875b;
+  border-radius:7px;
+  background:
+    radial-gradient(ellipse at 82% 50%,#3283942b,transparent 30%),
+    radial-gradient(ellipse at 12% 120%,#b283392b,transparent 42%),
+    linear-gradient(112deg,#202832 0%,#141c25 54%,#1b2731 100%);
+  box-shadow:inset 0 0 0 1px #fff1d00c,inset 0 16px 28px #ffffff05,0 7px 18px #0003;
+}
+#skymissions .skymissions-store-header::before {
+  position:absolute;
+  inset:5px;
+  border:1px solid #d6b67855;
+  border-radius:4px;
+  content:"";
+  pointer-events:none;
+}
+#skymissions .skymissions-store-header::after {
+  position:absolute;
+  top:-45px;
+  right:25%;
+  width:210px;
+  height:210px;
+  border:1px solid #8dabc01a;
+  border-radius:50%;
+  box-shadow:0 0 0 16px #8dabc00b,0 0 0 34px #8dabc008;
+  content:"";
+  pointer-events:none;
+}
+#skymissions .skymissions-store-intro,
+#skymissions .skymissions-store-wallet { position:relative; z-index:1; }
+#skymissions .skymissions-store-intro .eyebrow { margin:0 0 7px; color:#e2ba70; font:9px "DM Mono",monospace; letter-spacing:.2em; }
+#skymissions .skymissions-store-intro h2 { margin:0; color:#f1e4c8; font:700 clamp(24px,3vw,34px)/1 Georgia,"Times New Roman",serif; text-shadow:0 2px 8px #000a; }
+#skymissions .skymissions-store-intro > p:last-child { margin:8px 0 0; color:#acb8c0; font-size:11px; line-height:1.5; }
+#skymissions .skymissions-store-wallet {
+  display:grid;
+  justify-items:center;
+  gap:4px;
+  min-width:148px;
+  padding:11px 17px 10px;
+  border:1px solid #a98850aa;
+  border-radius:6px;
+  background:linear-gradient(150deg,#252b30e8,#111820f2);
+  box-shadow:inset 0 1px #fff2d01a,0 3px 12px #0004;
+}
+#skymissions .skymissions-store-wallet-label { color:#a8bac3; font:8px "DM Mono",monospace; letter-spacing:.14em; }
+#skymissions .skymissions-store-wallet > strong { display:flex; align-items:center; gap:8px; color:#f6d992; font:700 25px/1 "DM Mono",monospace; text-shadow:0 0 14px #e5aa4c40; }
+#skymissions .skymissions-store-wallet > strong img { width:32px; height:32px; object-fit:contain; filter:drop-shadow(0 1px 4px #e8ba6966); }
+#skymissions .skymissions-store-wallet-unit { color:#d2c5a7; font:10px Georgia,"Times New Roman",serif; letter-spacing:.08em; }
+#skymissions .skymissions-store-market {
+  padding:15px;
+  border:1px solid #536a79;
+  border-radius:7px;
+  background:linear-gradient(145deg,#18232d,#101821 60%,#141d26);
+  box-shadow:inset 0 1px #d9e6f00b;
+}
+#skymissions .skymissions-store-market-heading { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:0 1px 12px; }
+#skymissions .skymissions-store-market-heading .eyebrow { display:block; margin:0 0 5px; color:#79c7d1; font:8px "DM Mono",monospace; letter-spacing:.17em; }
+#skymissions .skymissions-store-market-heading h3 { margin:0; color:#e3eaf0; font:700 16px Georgia,"Times New Roman",serif; }
+#skymissions .skymissions-store-market-heading p { margin:6px 0 0; color:#9aaab4; font-size:10px; line-height:1.45; }
+#skymissions .skymissions-store-market-heading > span { color:#9aabb6; font:9px "DM Mono",monospace; text-align:right; }
+#skymissions .skymissions-store-stock-controls { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 12px; padding:9px 11px; border:1px solid #826b48a6; border-radius:4px; background:linear-gradient(105deg,#272820,#172129 55%,#15212b); }
+#skymissions .skymissions-store-countdown { display:grid; gap:4px; }
+#skymissions .skymissions-store-countdown > span { color:#a8b9c2; font:8px "DM Mono",monospace; letter-spacing:.14em; }
+#skymissions .skymissions-store-countdown > strong { color:#f2d38d; font:700 14px "DM Mono",monospace; }
+#skymissions .skymissions-store-refresh-button { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:36px; padding:7px 12px; border:1px solid #b28d4e; border-radius:4px; background:linear-gradient(180deg,#51412b,#30271e); color:#f1d99e; font:700 9px "DM Mono",monospace; letter-spacing:.04em; text-transform:uppercase; }
+#skymissions .skymissions-store-refresh-button > span { font-size:16px; }
+#skymissions .skymissions-store-refresh-button small { display:inline-flex; align-items:center; gap:4px; color:#e0c17c; font-size:8px; white-space:nowrap; }
+#skymissions .skymissions-store-refresh-button small img { width:16px; height:16px; object-fit:contain; }
+#skymissions .skymissions-store-refresh-button:hover:not(:disabled) { border-color:#f0d590; color:#fff0bf; }
+#skymissions .skymissions-store-refresh-button:disabled { opacity:.62; cursor:wait; }
+#skymissions .skymissions-store-toolbar { margin:0 0 13px; }
+#skymissions .skymissions-search-field { border-color:#617987; background:linear-gradient(110deg,#0e171f,#121e28); box-shadow:inset 0 1px #fff1; }
+#skymissions .skymissions-search-field:focus-within { border-color:#82dbe4; }
+#skymissions .achievement-store-grid { grid-template-columns:repeat(auto-fill,minmax(min(100%,245px),1fr)); gap:11px; }
+#skymissions .achievement-store-card {
+  position:relative;
+  isolation:isolate;
+  grid-template-columns:minmax(76px,96px) minmax(0,1fr);
+  align-items:stretch;
+  gap:11px;
+  min-height:142px;
+  padding:11px;
+  overflow:hidden;
+  border:1px solid #8b795b;
+  border-radius:5px;
+  background:
+    radial-gradient(ellipse at 0 0,#bd934c18,transparent 58%),
+    linear-gradient(145deg,#27323a 0%,#18232c 52%,#121a22 100%);
+  box-shadow:inset 0 0 0 1px #f6dfaa0d,inset 0 10px 20px #ffffff04,0 3px 8px #0003;
+}
+#skymissions .achievement-store-card::before {
+  position:absolute;
+  z-index:-1;
+  inset:4px;
+  border:1px solid #c5a46a45;
+  border-radius:3px;
+  content:"";
+  pointer-events:none;
+}
+#skymissions .achievement-store-card::after {
+  position:absolute;
+  top:7px;
+  left:50%;
+  width:6px;
+  height:6px;
+  border:1px solid #d7bc7a;
+  background:#55432b;
+  content:"";
+  pointer-events:none;
+  transform:translateX(-50%) rotate(45deg);
+}
+#skymissions .achievement-store-card:hover { border-color:#c6a366; }
+#skymissions .achievement-store-card.is-owned { border-color:#647f73; }
+#skymissions .achievement-store-card.is-mission-reward { border-color:#648495; }
+#skymissions .achievement-store-card[hidden],
+#skymissions .achievement-store-card img[hidden] { display:none; }
+#skymissions .achievement-store-card.without-image { grid-template-columns:minmax(0,1fr); }
+#skymissions .achievement-store-card > img {
+  align-self:stretch;
+  width:100%;
+  height:100%;
+  min-height:112px;
+  padding:5px;
+  object-fit:contain;
+  border:1px solid #778a8f;
+  border-radius:3px;
+  background:radial-gradient(ellipse at center,#293a42,#0c141b 72%);
+  box-shadow:inset 0 0 0 2px #111820;
+}
+#skymissions .achievement-store-item-placeholder {
+  display:grid;
+  place-items:center;
+  align-self:stretch;
+  width:100%;
+  height:100%;
+  min-height:112px;
+  padding:5px;
+  border:1px solid #778a8f;
+  border-radius:3px;
+  background:radial-gradient(ellipse at center,#293a42,#0c141b 72%);
+  box-shadow:inset 0 0 0 2px #111820;
+  color:#e8cf96;
+  font:48px/1 Georgia,"Times New Roman",serif;
+  text-shadow:0 0 12px #6cbed3aa;
+}
+#skymissions .achievement-store-copy { display:flex; flex-direction:column; align-items:flex-start; gap:6px; min-width:0; padding:3px 2px 1px 0; }
+#skymissions .achievement-store-type { display:inline-flex; align-items:center; min-height:17px; padding:2px 6px; border:1px solid #64849188; border-radius:2px; background:#10242caa; color:#9fd9df; font:8px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+#skymissions .achievement-store-card h3 { margin:0; color:#f0d28d; font:700 15px/1.15 Georgia,"Times New Roman",serif; text-shadow:0 1px 2px #000a; overflow-wrap:anywhere; }
+#skymissions .achievement-store-card p { margin:0; color:#bbc6cb; font-size:10px; line-height:1.4; }
+#skymissions .achievement-store-price { display:inline-flex; align-items:center; gap:6px; min-height:17px; color:#edd18f; font:700 10px "DM Mono",monospace; }
+#skymissions .achievement-store-price > img { width:18px; height:18px; object-fit:contain; filter:drop-shadow(0 0 3px #7fc8e7aa); }
+#skymissions .achievement-store-card button {
+  width:100%;
+  min-height:31px;
+  margin-top:auto;
+  padding:7px 9px;
+  border:1px solid #c29b55;
+  border-radius:3px;
+  background:linear-gradient(180deg,#55452c,#30271d);
+  color:#f3dca7;
+  font:700 9px "DM Mono",monospace;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+#skymissions .achievement-store-card button:hover:not(:disabled) { border-color:#f0d590; color:#fff0bf; }
+#skymissions .achievement-store-card button:disabled { border-color:#5c6a6f; background:linear-gradient(180deg,#303b40,#20282e); color:#a1afb3; opacity:.8; cursor:default; }
+#skymissions .skymissions-store-no-results { padding:22px; text-align:center; }
+@media(max-width:620px) {
+  #skymissions [data-achievements-panel="store"] { padding:10px; }
+  #skymissions .skymissions-store-header { align-items:flex-start; flex-direction:column; gap:14px; padding:20px 16px; }
+  #skymissions .skymissions-store-wallet { grid-template-columns:auto auto auto; justify-items:start; align-items:center; gap:8px; min-width:0; padding:7px 10px; }
+  #skymissions .skymissions-store-wallet-label { display:none; }
+  #skymissions .skymissions-store-wallet > strong { font-size:18px; }
+  #skymissions .skymissions-store-wallet > strong img { width:24px; height:24px; }
+  #skymissions .skymissions-store-market { padding:10px; }
+  #skymissions .skymissions-store-market-heading { align-items:flex-start; flex-direction:column; }
+  #skymissions .skymissions-store-market-heading > span { text-align:left; }
+  #skymissions .skymissions-store-stock-controls { align-items:flex-start; flex-direction:column; }
+  #skymissions .skymissions-store-refresh-button { width:100%; }
+  #skymissions .achievement-store-grid { grid-template-columns:minmax(0,1fr); }
+}

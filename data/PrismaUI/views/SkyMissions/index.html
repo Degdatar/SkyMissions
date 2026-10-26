@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkyMissions</title>
+  <link rel="stylesheet" href="../SkyOS/style.css?v=20261023-achievements-missions-5">
+  <link rel="stylesheet" href="../SkyOS/app-branding.css?v=20261023-achievements-missions-5">
+  <link rel="stylesheet" href="skymissions.css?v=20261025-skystore-1">
+</head>
+<body>
+  <div id="skymissions" class="page" data-surface="missions">
+    <div class="page-heading brand-heading skymissions-heading">
+      <img class="page-banner skymissions-banner" src="skymissions-banner.png" alt="">
+      <div class="page-title"><img class="page-logo skymissions-logo" src="skymissions-logo.png" alt="SkyMissions logo">
+        <div><p class="eyebrow">THE SKYOS ADVENTURE LEDGER</p><h1>SkyMissions</h1><p class="subheading">Missions, rewards, and your character dashboard in one place.</p></div>
+      </div>
+    </div>
+    <nav id="skymissions-tabs" class="skymissions-tabs" role="tablist" aria-label="SkyMissions sections">
+      <button type="button" class="skymissions-main-tab active" data-achievements-tab="dashboard" aria-pressed="true">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 25h24M7 25a9 9 0 0 1 18 0M16 16v-2m-6 5 1.5 1.5m13-1.5L23 20.5M16 25l5-7"/><path d="M6 8h20v5H6zM9 8V5h14v3"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button type="button" class="skymissions-main-tab" data-achievements-tab="missions" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="m6 25 13-13m-7 15 13-13M7 8l3-3 4 4-3 3zm12 12 4-4 4 4-4 4z"/><path d="m11 14 7 7m-3-16 5 5M5 27l3-3m17-17 2-2"/></svg>
+        <span>SkyMissions</span>
+      </button>
+      <button type="button" class="skymissions-main-tab" data-achievements-tab="store" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 13h22l-2-7H7zm2 0v14h18V13M5 27h22M11 27v-8h7v8"/><path d="M5 13a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 4 0"/><path d="M24 4v3"/></svg>
+        <span>SkyStore</span>
+      </button>
+    </nav>
+    <section class="skyachievements-panel skymissions-main-panel" data-achievements-panel="dashboard">
+      <nav class="skymissions-dashboard-tabs" aria-label="Dashboard sections">
+        <button type="button" class="active" data-dashboard-tab="overview" aria-pressed="true"><span>Overview</span></button>
+        <button type="button" data-dashboard-tab="factions" aria-pressed="false"><span>Factions</span></button>
+        <button type="button" data-dashboard-tab="properties" aria-pressed="false"><span>Properties</span></button>
+        <button type="button" data-dashboard-tab="name-cards" aria-pressed="false"><span>Name Cards</span></button>
+        <button type="button" data-dashboard-tab="titles" aria-pressed="false"><span>Titles</span></button>
+      </nav>
+      <div data-dashboard-panel="overview">
+      <div class="achievement-dashboard-top">
+        <section class="achievement-dashboard-card achievement-player-information">
+          <header class="achievement-card-heading"><h2>Player Information</h2><span>ACTIVE SAVE</span></header>
+          <div class="achievement-profile">
+            <div class="achievement-profile-art">
+              <div class="achievement-nameplate"><img id="achievement-current-name-card" alt=""><span id="achievement-nameplate-name">Adventurer</span></div>
+              <div id="achievement-portrait-frame" class="achievement-portrait-frame"><img id="achievement-player-portrait" alt="Player portrait" hidden><span id="achievement-portrait-fallback">PLAYER CARD<br>NOT FOUND</span></div>
+            </div>
+            <div class="achievement-profile-stats">
+              <div class="achievement-level"><small>LEVEL</small><strong id="achievement-player-level">—</strong></div>
+              <div class="achievement-title-block"><small>TITLE</small><strong id="achievement-player-title">No title selected</strong></div>
+              <div class="achievement-reputation-block"><small>REPUTATION</small><strong id="achievement-reputation">0</strong></div>
+              <div class="achievement-rank-block"><small>RANK</small><strong id="achievement-reputation-rank">Nameless Wanderer</strong></div>
+              <div class="achievement-missions-block"><small>COMPLETED MISSIONS</small><strong id="achievement-completed-missions">0</strong></div>
+              <div class="achievement-points-block"><small>SKYPOINTS OWNED</small><div><img src="skypoints.png" alt="SkyPoints"><strong id="achievement-owned-points">0</strong></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="achievement-dashboard-card achievement-actions-card">
+          <header class="achievement-card-heading"><h2>Actions</h2><span>LAST 10 · SKYREWRITE</span></header>
+          <ol id="achievement-recent-actions" class="achievement-action-list"><li class="empty">Waiting for SkyRewrite history…</li></ol>
+        </section>
+      </div>
+
+      <section class="achievement-dashboard-card achievement-unlocked-showcase">
+        <header class="achievement-card-heading"><h2>Unlocked Achievements</h2><span id="achievement-unlocked-summary">0 unlocked</span></header>
+        <div class="achievement-achievement-carousel">
+          <button type="button" class="achievement-carousel-arrow" data-achievement-carousel="previous" aria-label="Previous unlocked achievements">‹</button>
+          <div id="achievement-unlocked-carousel" class="achievement-achievement-track"></div>
+          <button type="button" class="achievement-carousel-arrow" data-achievement-carousel="next" aria-label="Next unlocked achievements">›</button>
+        </div>
+      </section>
+
+      <div class="achievement-dashboard-bottom">
+        <section class="achievement-dashboard-card achievement-basic-information">
+          <header class="achievement-card-heading"><h2>Basic Information</h2></header>
+          <div class="achievement-gender-row"><span id="achievement-gender-icon" class="achievement-gender-icon" aria-label="Male">♂</span></div>
+          <dl class="achievement-basic-list">
+            <div><dt>Name</dt><dd id="achievement-basic-name">—</dd></div>
+            <div><dt>Faction</dt><dd id="achievement-basic-faction">None selected</dd></div>
+            <div><dt>Job</dt><dd id="achievement-basic-job">Adventurer</dd></div>
+            <div><dt>Health</dt><dd id="achievement-basic-health">—</dd></div>
+            <div><dt>Magicka</dt><dd id="achievement-basic-magicka">—</dd></div>
+            <div><dt>Stamina</dt><dd id="achievement-basic-stamina">—</dd></div>
+            <div><dt>Main Property</dt><dd id="achievement-basic-property">None selected</dd></div>
+            <div><dt>Marital Status</dt><dd id="achievement-basic-marital">Single</dd></div>
+            <div><dt>Achievements</dt><dd id="achievement-basic-achievements">0</dd></div>
+            <div><dt>Completed Missions</dt><dd id="achievement-basic-missions">0</dd></div>
+            <div><dt>Followers</dt><dd id="achievement-basic-followers">0</dd></div>
+            <div><dt>Total Kills</dt><dd id="achievement-basic-kills">0</dd></div>
+            <div><dt>Total Theft</dt><dd id="achievement-basic-theft">0</dd></div>
+          </dl>
+          <div class="achievement-marital-editor">
+            <div class="skyachievement-picker achievement-filter-picker achievement-marital-picker" data-skyachievement-picker="achievement-marital-status">
+              <label class="skyachievement-picker-label">Marital status</label>
+              <button type="button" class="skyachievement-picker-trigger" aria-haspopup="listbox" aria-expanded="false"><span>Single</span><i aria-hidden="true">⌄</i></button>
+              <div class="skyachievement-picker-popover" hidden>
+                <div class="skyachievement-picker-options" role="listbox" aria-label="Marital status"></div>
+              </div>
+            </div>
+            <input id="achievement-spouse-name" type="text" maxlength="80" placeholder="Spouse name" aria-label="Spouse name">
+            <button id="achievement-save-marital" type="button">Save</button>
+          </div>
+        </section>
+
+        <section class="achievement-dashboard-card achievement-name-card-roster">
+          <header class="achievement-card-heading"><h2>Unlocked Name Cards</h2><span id="achievement-name-card-summary">0 cards</span></header>
+          <div class="achievement-name-card-carousel">
+            <button type="button" class="achievement-vertical-arrow" data-name-card-scroll="up" aria-label="Scroll name cards up">▲</button>
+            <div id="achievement-name-card-list" class="achievement-name-card-list"></div>
+            <button type="button" class="achievement-vertical-arrow" data-name-card-scroll="down" aria-label="Scroll name cards down">▼</button>
+          </div>
+        </section>
+      </div>
+    
+      </div>
+    <section class="skyachievements-panel skymissions-dashboard-subpanel" data-dashboard-panel="factions" hidden>
+      <header class="achievement-section-heading"><div><p class="eyebrow">GUILDS &amp; ORDERS</p><h2>Factions</h2></div><span id="achievement-faction-note">Membership is read from the active player state.</span></header>
+      <div class="achievement-management-columns">
+        <section class="achievement-dashboard-card"><header class="achievement-card-heading"><h2>Locked Factions</h2><span id="achievement-locked-faction-count">0</span></header><div id="achievement-locked-factions" class="achievement-choice-list"></div></section>
+        <section class="achievement-dashboard-card"><header class="achievement-card-heading"><h2>Unlocked Factions</h2><span id="achievement-unlocked-faction-count">0</span></header><div id="achievement-unlocked-factions" class="achievement-choice-list"></div></section>
+      </div>
+    </section>
+
+
+    <section class="skyachievements-panel skymissions-dashboard-subpanel" data-dashboard-panel="properties" hidden>
+      <header class="achievement-section-heading"><div><p class="eyebrow">HOMES &amp; ESTATES</p><h2>Properties</h2></div><span>Choose a main property for your character card.</span></header>
+      <section class="achievement-dashboard-card achievement-property-manager">
+        <p>Vanilla home ownership is checked from each home’s cell owner. You can add a modded home you own manually.</p>
+        <div class="achievement-property-add"><label for="achievement-property-input">Modded home</label><input id="achievement-property-input" type="text" maxlength="80" placeholder="Name of a modded home you own"><button id="achievement-add-property" type="button">Add owned home</button></div>
+        <div id="achievement-properties" class="achievement-choice-list"></div>
+      </section>
+    </section>
+
+
+    <section class="skyachievements-panel skymissions-dashboard-subpanel" data-dashboard-panel="name-cards" hidden>
+      <header class="achievement-section-heading"><div><p class="eyebrow">PLAYER BANNERS</p><h2>Name Cards</h2></div><span>Choose a card to display behind your character name.</span></header>
+      <div id="achievement-name-card-grid" class="achievement-name-card-gallery"></div>
+    </section>
+
+    <section class="skyachievements-panel skymissions-dashboard-subpanel" data-dashboard-panel="titles" hidden>
+      <header class="achievement-section-heading"><div><p class="eyebrow">HONORS &amp; EPITHETS</p><h2>Character Titles</h2></div><span>Choose the title shown on your character dashboard.</span></header>
+      <div class="skymissions-title-toolbar">
+        <label class="skymissions-search-field" for="skymissions-title-search"><span aria-hidden="true">⌕</span><input id="skymissions-title-search" type="search" autocomplete="off" placeholder="Search 100 titles…" aria-label="Search character titles"></label>
+        <span id="skymissions-title-count" class="skymissions-result-count">100 titles</span>
+      </div>
+      <p class="skymissions-title-current">Current title: <strong id="skymissions-current-title">No title selected</strong></p>
+      <div id="achievement-title-grid" class="skymissions-title-grid"></div>
+    </section>
+
+
+    </section>
+    <section class="skyachievements-panel" data-achievements-panel="missions" hidden>
+      <div class="achievement-mission-toolbar">
+        <div class="achievement-mission-summary">
+          <strong class="achievement-mission-completed-stat"><span class="achievement-mission-check" aria-hidden="true">✓</span><span id="achievement-mission-completed">0</span> completed</strong>
+          <strong class="achievement-mission-points-stat"><img src="skypoints.png" alt=""><span id="achievement-mission-points">0</span> SkyPoints</strong>
+        </div>
+        <div class="achievement-mission-controls">
+          <div class="achievement-mission-refresh-countdown"><span>NEXT REFRESH</span><strong id="achievement-mission-refresh-countdown">24h 00m 00s</strong></div>
+          <button id="achievement-refresh-missions" type="button" class="achievement-mission-refresh-button"><span aria-hidden="true">⟳</span> Refresh <small>20 SkyPoints</small></button>
+        </div>
+      </div>
+      <header class="achievement-section-heading achievement-missions-heading"><div><p class="eyebrow">REPEATABLE CHALLENGES</p><h2>SkyMissions</h2></div><span>Accept missions to track them. Completing one reveals a new offer.</span></header>
+      <div id="achievement-missions" class="achievement-mission-grid"></div>
+    </section>
+
+    <section class="skyachievements-panel skymissions-main-panel" data-achievements-panel="store" hidden>
+      <header class="skymissions-store-header">
+        <div class="skymissions-store-intro">
+          <p class="eyebrow">THE SKYOS REWARD VAULT</p>
+          <h2>SkyStore</h2>
+          <p>Rotating rare gear from your loaded game and mod records, alongside name cards and app offers.</p>
+        </div>
+        <div class="skymissions-store-wallet" aria-live="polite">
+          <span class="skymissions-store-wallet-label">AVAILABLE BALANCE</span>
+          <strong><img src="skypoints.png" alt=""><span id="achievement-store-points">0</span></strong>
+          <span class="skymissions-store-wallet-unit">SkyPoints</span>
+        </div>
+      </header>
+      <section class="skymissions-store-market" aria-label="SkyStore offers">
+        <div class="skymissions-store-market-heading">
+          <div><span class="eyebrow">THE MARKETPLACE</span><h3>Browse the collection</h3><p>Up to 10 rotating weapons, armor pieces, and black soul gems. Quest items and clutter are excluded.</p></div>
+          <span id="achievement-store-summary">Name cards and app offers</span>
+        </div>
+        <div class="skymissions-store-stock-controls">
+          <div class="skymissions-store-countdown"><span>NEXT GAME STOCK</span><strong id="achievement-store-refresh-countdown">Loading…</strong></div>
+          <button id="achievement-refresh-store" type="button" class="skymissions-store-refresh-button"><span aria-hidden="true">⟳</span> Refresh Stock <small><img src="skypoints.png" alt="">50 SkyPoints</small></button>
+        </div>
+        <div class="skymissions-store-toolbar">
+          <label class="skymissions-search-field" for="achievement-store-search"><span aria-hidden="true">⌕</span><input id="achievement-store-search" type="search" autocomplete="off" placeholder="Search game items, name cards, and app offers…" aria-label="Search SkyStore"></label>
+          <span id="achievement-store-filter-summary" class="skymissions-result-count"></span>
+        </div>
+        <div id="achievement-store-grid" class="achievement-store-grid"></div>
+        <p id="achievement-store-no-results" class="empty skymissions-store-no-results" hidden>No offers match your search.</p>
+      </section>
+    </section>
+  </div>
+  <script defer src="../SkyAchievements/achievement-rules.js?v=20261026-shared-achievement-rules-1"></script>
+  <script defer src="app.js?v=20261026-dashboard-records-1"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+{
+  "name": "SkyMissions",
+  "description": "Character dashboard, randomized missions, and SkyStore",
+  "icon": "✦",
+  "accent": "#55cde4",
+  "requiredCore": "SkyOS.dll",
+  "appPlugin": "SkyMissions.dll",
+  "showInSkyApps": true,
+  "settings": [
+    {
+      "id": "playerCardFormat",
+      "group": "Player card",
+      "label": "Preferred image format",
+      "type": "select",
+      "default": "png",
+      "options": [
+        { "value": "png", "label": "PNG" },
+        { "value": "jpg", "label": "JPG" },
+        { "value": "gif", "label": "GIF" }
+      ],
+      "description": "Recommended image size: 900 × 1200 pixels (3:4 portrait). Place the selected format at Player Card/Player Card.<format>. If it is missing, SkyMissions uses the next available format."
+    },
+    {
+      "id": "playerCardNameColor",
+      "group": "Player card",
+      "label": "Player name color",
+      "type": "color",
+      "default": "#F4D28D",
+      "options": [
+        { "value": "#F4D28D", "label": "Warm gold" },
+        { "value": "#FFF2D1", "label": "Ivory" },
+        { "value": "#D8E1E8", "label": "Silver" },
+        { "value": "#9BE8FF", "label": "Ice blue" },
+        { "value": "#55C7FF", "label": "Sky blue" },
+        { "value": "#607DFF", "label": "Royal blue" },
+        { "value": "#00FFFF", "label": "Neon cyan" },
+        { "value": "#1E90FF", "label": "Neon blue" },
+        { "value": "#B026FF", "label": "Neon purple" },
+        { "value": "#FF00FF", "label": "Neon magenta" },
+        { "value": "#FF2D95", "label": "Neon pink" },
+        { "value": "#FF1744", "label": "Neon red" },
+        { "value": "#FF5E00", "label": "Neon orange" },
+        { "value": "#B6FF00", "label": "Neon lime" },
+        { "value": "#39FF14", "label": "Neon green" },
+        { "value": "#FFFF00", "label": "Neon yellow" },
+        { "value": "#8A2BE2", "label": "Violet" },
+        { "value": "#DC143C", "label": "Crimson" },
+        { "value": "#50C878", "label": "Emerald" },
+        { "value": "#00D4B8", "label": "Teal" },
+        { "value": "#B87333", "label": "Copper" },
+        { "value": "#B76E79", "label": "Rose gold" },
+        { "value": "#C8A2C8", "label": "Lavender" },
+        { "value": "#FFFFFF", "label": "White" }
+      ],
+      "description": "Choose a preset swatch or use Custom color to create any color for the player name on the dashboard name card."
+    },
+    {
+      "id": "playerCardNameFont",
+      "group": "Player card",
+      "label": "Player name font",
+      "type": "select",
+      "default": "cinzel",
+      "options": [
+        { "value": "cinzel", "label": "Cinzel" },
+        { "value": "georgia", "label": "Georgia" },
+        { "value": "palatino", "label": "Palatino" },
+        { "value": "times", "label": "Times New Roman" },
+        { "value": "cambria", "label": "Cambria" },
+        { "value": "garamond", "label": "Garamond" },
+        { "value": "papyrus", "label": "Papyrus" },
+        { "value": "trebuchet", "label": "Trebuchet MS" },
+        { "value": "segoe", "label": "Segoe UI" },
+        { "value": "candara", "label": "Candara" },
+        { "value": "copperplate", "label": "Copperplate" },
+        { "value": "impact", "label": "Impact" }
+      ],
+      "description": "Changes the font used for the player name over the selected dashboard name card."
+    },
+    {
+      "id": "missionNoticeEnabled",
+      "group": "Mission completion message",
+      "label": "Show mission completion message",
+      "type": "boolean",
+      "default": true,
+      "description": "Display the SkyMissions overlay when a mission is completed."
+    },
+    {
+      "id": "missionNoticeDurationMs",
+      "group": "Mission completion message",
+      "label": "Message duration (milliseconds)",
+      "type": "number",
+      "default": 1500,
+      "min": 500,
+      "max": 3000,
+      "step": 1,
+      "unit": "ms",
+      "description": "How long the mission completion message stays visible. Enter any whole number from 500 to 3000 milliseconds."
+    },
+    {
+      "id": "missionNoticeDesign",
+      "group": "Mission completion message",
+      "label": "Message design",
+      "type": "select",
+      "default": "dwemer-ledger",
+      "options": [
+        {
+          "value": "dwemer-ledger",
+          "label": "Dwemer ledger"
+        },
+        {
+          "value": "frost-seal",
+          "label": "Frost seal"
+        },
+        {
+          "value": "quest-banner",
+          "label": "Quest banner"
+        },
+        {
+          "value": "minimal",
+          "label": "Minimal"
+        }
+      ],
+      "description": "Choose a distinct mission-completion overlay style."
+    },
+    {
+      "id": "missionNoticeSize",
+      "group": "Mission completion message",
+      "label": "Message size",
+      "type": "select",
+      "default": "large",
+      "options": [
+        { "value": "large", "label": "Large" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "compact", "label": "Compact" }
+      ],
+      "description": "Choose the mission completion message size. Large keeps the current size; Standard is smaller; Compact uses a much smaller layout."
+    },
+    {
+      "id": "missionNoticePosition",
+      "group": "Mission completion message",
+      "label": "Message position",
+      "type": "select",
+      "default": "top-center",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "center-left",
+          "label": "Center left"
+        },
+        {
+          "value": "center-center",
+          "label": "Center center"
+        },
+        {
+          "value": "center-right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "description": "Choose one of the nine screen positions."
+    },
+    {
+      "id": "openHotkey",
+      "group": "Keyboard shortcuts",
+      "label": "Open SkyMissions",
+      "type": "hotkey",
+      "default": "",
+      "description": "Open the dashboard, mission board, and SkyStore."
+    }
+  ]
+}

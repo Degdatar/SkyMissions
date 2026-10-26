@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SkyMissions API Guide</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0d141a;--panel:#16212a;--line:#38505d;--text:#e8eef2;--muted:#adbdc7;--cyan:#72d9e5;--gold:#e9c47b}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#203747,var(--bg) 60%);color:var(--text);font:15px/1.65 "Segoe UI",Arial,sans-serif}main{max-width:1080px;margin:30px auto;padding:0 20px 50px}
+    .hero{min-height:220px;display:flex;align-items:center;gap:20px;padding:28px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(90deg,#0b1319e8,#0d161de6),url("../banner.png") center/cover}.hero img{width:88px;height:88px;object-fit:contain}.eyebrow{color:var(--gold);font:700 10px Consolas,monospace;letter-spacing:.16em}h1{margin:5px 0;font-size:clamp(30px,5vw,46px)}h2{margin-top:0;color:var(--gold);font-size:22px}h3{color:var(--cyan);font-size:16px}section{margin-top:14px;padding:22px;border:1px solid #ffffff1c;border-radius:11px;background:#15212adf}p,li{color:var(--muted)}code,pre{font-family:Consolas,monospace}code{color:#a7edf2}pre{overflow:auto;padding:15px;border:1px solid var(--line);border-radius:8px;background:#0a1116;color:#dce8ed;font-size:12px}.note{padding:12px;border-left:3px solid var(--gold);background:#e7bd6c12;color:var(--muted)}table{width:100%;border-collapse:collapse}td,th{padding:9px;border-bottom:1px solid #ffffff18;text-align:left;vertical-align:top}th{color:var(--cyan)}footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}@media(max-width:650px){main{padding:0 12px}.hero{padding:18px}.hero img{width:64px;height:64px}section{padding:16px}}
+  </style>
+</head>
+<body><main>
+  <header class="hero"><img src="../logo.png" alt="SkyMissions logo"><div><p class="eyebrow">MODDER REFERENCE · C ABI VERSION 1</p><h1>SkyMissions API</h1><p>Let native SKSE plugins register event-driven missions that award SkyPoints and offers whose purchases are broadcast to the owning plugin.</p></div></header>
+  <section><h2>What the API provides</h2><p>The optional header exposes a versioned C ABI from the already-loaded <code>SkyMissions.dll</code>. It lets an SKSE plugin register missions that track SkyRewrite journal events and offers that appear in SkyStore. No C++ standard-library types or import library cross the API boundary.</p><ul><li>Mission definitions can match an event type plus optional FormID, base FormID, subject text, and identity text.</li><li>Players accept missions in SkyMissions. Progress, completion, and earned SkyPoints are saved per character.</li><li>Store offers display a name, description, image, and SkyPoints price. Your plugin receives a purchase message and fulfills the offer.</li></ul><p class="note"><strong>Requirements:</strong> SkyOS Core, SkyMissions, and SkyRewrite must be installed in the active profile. The separate SkyRewrite API Header supplies the named event constants used in mission definitions. Register definitions during plugin initialization so they are available when SkyMissions opens.</p></section>
+  <section><h2>Connect and register a mission</h2><pre><code>#include &lt;windows.h&gt;
+#include "SkyMissionsAPI.h"
+#include "SkyRewriteAPI.h"
+
+SkyMissionsAPI g_missions{};
+
+bool RegisterExampleMission()
+{
+    const HMODULE module = GetModuleHandleW(L"SkyMissions.dll");
+    if (!SkyMissions_LoadAPI(module, &amp;g_missions)) return false;
+
+    SkyMissionsMissionV1 mission{};
+    mission.structSize = sizeof(mission);
+    mission.eventType = SKYREWRITE_EVENT_BRAWL;
+    mission.goal = 3;
+    mission.reward = 75;
+    strcpy_s(mission.ownerId, "ExampleMod");
+    strcpy_s(mission.id, "win-three-brawls");
+    strcpy_s(mission.title, "Prove Your Fists");
+    strcpy_s(mission.description, "Win three brawls in Skyrim.");
+    strcpy_s(mission.identityContains, "SkyRewrite/Brawl/v1/won");
+    return g_missions.registerMissionV1(&amp;mission) != 0;
+}</code></pre><p>Use the event constants from <code>SkyRewriteAPI.h</code>. For brawls, type 45 uses stage <code>1</code> for a win and <code>2</code> for a loss; the identity filter above selects wins. A mission advances once per matching event. For inventory pickup event type 4, the event's stage quantity advances progress by that amount.</p><p>Each mission requires a nonzero event type, a goal from 1 to 1,000,000, a title, and stable owner and mission IDs. Reward may be 0–1,000,000 SkyPoints. Empty filters and zero form IDs match any value. Registering the same owner and ID again replaces the previous definition.</p></section>
+  <section><h2>Register a SkyStore offer</h2><pre><code>SkyMissionsStoreOfferV1 offer{};
+offer.structSize = sizeof(offer);
+offer.price = 900;
+strcpy_s(offer.ownerId, "ExampleMod");
+strcpy_s(offer.id, "ranger-outfit");
+strcpy_s(offer.name, "Ranger Outfit");
+strcpy_s(offer.description, "Unlock the ExampleMod ranger outfit.");
+strcpy_s(offer.image, "file:///D:/Skyrim/Data/SKSE/Plugins/ExampleMod/preview.png");
+const int32_t result = g_missions.registerStoreOfferV1(&amp;offer);</code></pre><p>The image is optional and must be an <code>https://</code>, <code>http://</code>, or <code>file:///</code> URL. Offer IDs and owner IDs may contain letters, digits, underscore, hyphen, and period. A repeated owner/offer ID updates the offer rather than adding a duplicate.</p></section>
+  <section><h2>Fulfill a purchase</h2><p>SkyMissions broadcasts a version 1 <code>SkyMissionsStorePurchaseV1</code> with message type <code>SKYMISSIONS_STORE_PURCHASE_MESSAGE</code> (<code>SMPS</code>). Register an SKSE messaging listener and verify the payload version, size, owner ID, and offer ID before granting content. The payload contains the owner, offer ID, display name, and price paid in SkyPoints.</p><pre><code>if (message-&gt;type == SKYMISSIONS_STORE_PURCHASE_MESSAGE &amp;&amp;
+    message-&gt;data &amp;&amp; message-&gt;dataLen &gt;= sizeof(SkyMissionsStorePurchaseV1)) {
+    const auto* purchase = static_cast&lt;const SkyMissionsStorePurchaseV1*&gt;(message-&gt;data);
+    if (purchase-&gt;version == 1 &amp;&amp; strcmp(purchase-&gt;moduleId, "ExampleMod") == 0 &amp;&amp;
+        strcmp(purchase-&gt;offerId, "ranger-outfit") == 0) {
+        // Queue the mod-owned reward through your normal game-thread path.
+    }
+}</code></pre><p class="note">Handle fulfillment idempotently in your plugin. SkyMissions reports a completed payment; it does not know how your mod unlocks or grants its product.</p></section>
+  <section><h2>Limits and return values</h2><table><thead><tr><th>API call</th><th>Limit</th><th>Return</th></tr></thead><tbody><tr><td><code>registerMissionV1</code></td><td>Up to 64 active definitions; maximum goal and reward are 1,000,000.</td><td><code>1</code> added, <code>2</code> replaced, <code>0</code> invalid or full.</td></tr><tr><td><code>registerStoreOfferV1</code></td><td>Up to 256 active offers; maximum price is 1,000,000 SkyPoints.</td><td><code>1</code> added, <code>2</code> replaced, <code>0</code> invalid or full.</td></tr><tr><td><code>getAPIVersion</code></td><td>Versioned ABI.</td><td>Returns <code>1</code> for this release.</td></tr></tbody></table><p>Definitions are runtime registrations and should be repeated each game launch. The API stores copied values and is safe to call during plugin initialization; it does not access Skyrim engine state from the registration calls.</p></section>
+  <footer>SkyMissions API Header · Version 1 · Mission and SkyStore registrations are owned by your plugin</footer>
+</main></body></html>

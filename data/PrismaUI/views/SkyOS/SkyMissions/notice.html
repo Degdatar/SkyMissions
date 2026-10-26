@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkyMissions Notice</title>
+  <link rel="stylesheet" href="notice.css">
+</head>
+<body>
+  <main id="mission-notice" aria-live="polite" aria-atomic="true" hidden>
+    <div class="notice-frame">
+      <img class="seal" src="../../SkyMissions/skypoints.png" alt="">
+      <div class="notice-copy">
+        <p class="eyebrow">SKYOS <span>◆</span> MISSION LEDGER</p>
+        <h1>Completed Mission</h1>
+        <strong id="mission-title"></strong>
+      </div>
+      <div class="reward" aria-label="Mission reward">
+        <span class="reward-label">EARNED</span>
+        <strong id="mission-points">+0</strong>
+        <span class="reward-currency">SkyPoints</span>
+      </div>
+      <div class="engraved-rule" aria-hidden="true"><span></span></div>
+    </div>
+  </main>
+  <script src="notice.js"></script>
+</body>
+</html>
